@@ -71,9 +71,7 @@ class DelimToFlat():
                     
         dictMaxFieldLns = self.__InitializeDictionary(lstHeaderRecord)
         
-        lRec = 0L
         for row in reader:
-            lRec += 1L
             for i, col in enumerate(lstHeaderRecord):
                 nLen = len(row[i])
                 if dictMaxFieldLns[col] < nLen:
@@ -156,7 +154,7 @@ class DelimToFlat():
                 nMaxFldNameWidth = self.__VERBFldNameWidth(nMaxFldNameWidth)
                 
                 nUID = lstHeaderRecord.index(self.strUIDfldname)  # column of the record UID
-                lRec = 0L                
+                lRec = 1L                
                 for row in reader:
                     for r in lstControl:
                         if r[0] == "P-A-D-D-I-N-G":   # this field can be inserted into the layout to insert blank spaces
@@ -177,6 +175,11 @@ class DelimToFlat():
                                 if dictHeaderRecord.has_key(r[0]):
                                     strValue = self.__strip_accents(unicode(row[nCol]))
                                 fout.write("%-*.*s" % (nWidth,nWidth,strValue))
+                                if (lRec % 1000L) == 0:
+                                    sys.stdout.write("\r\trecords processed:%12ld" % lRec)
+                                    sys.stdout.flush()
+                                lRec += 1L
+                                
                     fout.write('\n')
                 
                 fout.close()
