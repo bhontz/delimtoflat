@@ -12,8 +12,8 @@
     as V which means the data from these fields will be written into a verbatim file, and adding fields(s) with field name P-A-D-D-I-N-G to force deliberate
     spacing within the fixed file output.    
 """
-__version__ = "$Revision: 0.02 $"
-__source__ = "$Header: \python27\DelimToFlat.py, v0.02 5/21/2014 $"
+__version__ = "$Revision: 0.04 $"
+__source__ = "$Header: \python27\DelimToFlat.py, v0.04 7/8/2014 $"
 
 import sys, unicodecsv, csv, time, codecs, unicodedata
 
@@ -175,16 +175,19 @@ class DelimToFlat():
                                 if dictHeaderRecord.has_key(r[0]):
                                     strValue = self.__strip_accents(unicode(row[nCol]))
                                 fout.write("%-*.*s" % (nWidth,nWidth,strValue))
-                                if (lRec % 1000L) == 0:
-                                    sys.stdout.write("\r\trecords processed:%12ld" % lRec)
-                                    sys.stdout.flush()
-                                lRec += 1L
+
+                    if (lRec % 1000L) == 0:
+                        sys.stdout.write("\r\trecords processed:%12ld" % lRec)
+                        sys.stdout.flush()
+                    lRec += 1L
                                 
                     fout.write('\n')
                 
                 fout.close()
                 if bHasVerbatim:
                     fFileSet.close()
+                    
+                sys.stdout.write("\t\n\nCompleted. Total number of records processed:%12ld " % lRec)
                         
         return
         
