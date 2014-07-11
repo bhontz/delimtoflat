@@ -12,8 +12,8 @@
     as V which means the data from these fields will be written into a verbatim file, and adding fields(s) with field name P-A-D-D-I-N-G to force deliberate
     spacing within the fixed file output.    
 """
-__version__ = "$Revision: 0.04 $"
-__source__ = "$Header: \python27\DelimToFlat.py, v0.04 7/8/2014 $"
+__version__ = "$Revision: 0.05 $"
+__source__ = "$Header: \python27\DelimToFlat.py, v0.05 7/8/2014 $"
 
 import sys, unicodecsv, csv, time, codecs, unicodedata
 
@@ -66,7 +66,7 @@ class DelimToFlat():
             print "unable to open file - details:%s" % detail
             sys.exit(-1)
         
-        reader = unicodecsv.reader(fDelim, delimiter=self.strDELIMchar, encoding='UTF-8')   
+        reader = unicodecsv.reader(fDelim, delimiter=self.strDELIMchar, encoding='UTF-8', errors='ignore')   
         lstHeaderRecord = reader.next()   # capture the header record of the delimited file     
                     
         dictMaxFieldLns = self.__InitializeDictionary(lstHeaderRecord)
@@ -139,7 +139,7 @@ class DelimToFlat():
                 if bHasBOM:   # push past the BOM marker if one is found
                     fDelim.seek(long(nLenBOM))
         
-                reader = unicodecsv.reader(fDelim, delimiter=self.strDELIMchar, encoding='UTF-8')
+                reader = unicodecsv.reader(fDelim, delimiter=self.strDELIMchar, encoding='UTF-8', errors='ignore')
                 lstHeaderRecord = reader.next()
                 lstHeaderRecord = list(str(l.upper()) for l in lstHeaderRecord)
                 
