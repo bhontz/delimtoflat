@@ -12,8 +12,8 @@
     as V which means the data from these fields will be written into a verbatim file, and adding fields(s) with field name P-A-D-D-I-N-G to force deliberate
     spacing within the fixed file output.    
 """
-__version__ = "$Revision: 0.05 $"
-__source__ = "$Header: \python27\DelimToFlat.py, v0.05 7/8/2014 $"
+__version__ = "$Revision: 0.06 $"
+__source__ = "$Header: \python27\DelimToFlat.py, v0.06 10/15/2014 $"
 
 import sys, unicodecsv, csv, time, codecs, unicodedata
 
@@ -35,6 +35,15 @@ class DelimToFlat():
             self.strDELIMchar = self.__CleanDelimChar(dictParameters["DELIMchar"])  # assumes dictionary contains brackets around delimiter like [\t]
         if dictParameters.has_key("UIDfldname"):
             self.strUIDfldname = dictParameters["UIDfldname"].upper()  # user needs to identify the respondent UID fieldname
+        if dictParameters.has_key("TEXTqualifier"):
+            self.strTXTQUALIFIERchar = self.__CleanDelimChar(dictParameters["TEXTqualifier"])  # assumes dictionary contains brackets around delimiter like ["]
+        else:
+            self.strTXTQUALIFIERchar = ""
+        if dictParameters.has_key("RECcounter"):
+            self.lRecCounter = long(dictParameters["RECcounter"])
+        else:
+            self.lRecCounter = 1000L
+            
         return
     
     def __del__(self):
@@ -43,6 +52,8 @@ class DelimToFlat():
     def PrintParameters(self):
         print self.strDELIMpathfn
         print "(%s)" % self.strDELIMchar
+        print "(%s)" % self.strTXTQUALIFIERchar
+        print "(%ld)" % self.lRecCounter
         return
     
     def CreateLayout(self):
@@ -66,7 +77,10 @@ class DelimToFlat():
             print "unable to open file - details:%s" % detail
             sys.exit(-1)
         
-        reader = unicodecsv.reader(fDelim, delimiter=self.strDELIMchar, encoding='UTF-8', errors='ignore')   
+        if self.strTXTQUALIFIERchar == "":
+            reader = unicodecsv.reader(fDelim, delimiter=self.strDELIMchar, quoting=csv.QUOTE_NONE, encoding='UTF-8', errors='ignore')   
+        else:            
+            reader = unicodecsv.reader(fDelim, delimiter=self.strDELIMchar, quotechar=self.strTXTQUALIFIERchar, encoding='UTF-8', errors='ignore')   
         lstHeaderRecord = reader.next()   # capture the header record of the delimited file     
                     
         dictMaxFieldLns = self.__InitializeDictionary(lstHeaderRecord)
@@ -138,8 +152,13 @@ class DelimToFlat():
                 
                 if bHasBOM:   # push past the BOM marker if one is found
                     fDelim.seek(long(nLenBOM))
-        
-                reader = unicodecsv.reader(fDelim, delimiter=self.strDELIMchar, encoding='UTF-8', errors='ignore')
+                        
+                if self.strTXTQUALIFIERchar == "":
+                    reader = unicodecsv.reader(fDelim, delimiter=self.strDELIMchar, quoting=csv.QUOTE_NONE, encoding='UTF-8', errors='ignore')   
+                else:
+                    print "text qualifier:", self.strTXTQUALIFIERchar
+                    reader = unicodecsv.reader(fDelim, delimiter=self.strDELIMchar, quotechar=self.strTXTQUALIFIERchar, encoding='UTF-8', errors='ignore')   
+                
                 lstHeaderRecord = reader.next()
                 lstHeaderRecord = list(str(l.upper()) for l in lstHeaderRecord)
                 
@@ -176,7 +195,7 @@ class DelimToFlat():
                                     strValue = self.__strip_accents(unicode(row[nCol]))
                                 fout.write("%-*.*s" % (nWidth,nWidth,strValue))
 
-                    if (lRec % 1000L) == 0:
+                    if (lRec % self.lRecCounter) == 0:
                         sys.stdout.write("\r\trecords processed:%12ld" % lRec)
                         sys.stdout.flush()
                     lRec += 1L

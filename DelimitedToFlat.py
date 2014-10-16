@@ -28,8 +28,8 @@
    The VERBATIM file is written out as UTF-8 whereas the CEND file is written as a cp-1252 (ascii) code page file
         
 """
-__version__ = "$Revision: 0.02 $"
-__source__ = "$Header: \python27\DelimToFlat.py, v0.02 5/21/2014 $"
+__version__ = "$Revision: 0.06 $"
+__source__ = "$Header: \python27\DelimToFlat.py, v0.06 10/15/2014 $"
 
 import os, sys, time, argparse
 from DelimToFlatClass import DelimToFlat
@@ -92,6 +92,7 @@ if __name__ == '__main__':
             sys.stdout.write("Start of Process: %s\n\n" % time.strftime("%H:%M:%S", time.localtime()))
             
             obj = DelimToFlat(dictParameters)
+            
             if argns.bCreateLayout:
                 obj.CreateLayout()
             else:
