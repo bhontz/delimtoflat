@@ -12,7 +12,7 @@
     as V which means the data from these fields will be written into a verbatim file, and adding fields(s) with field name P-A-D-D-I-N-G to force deliberate
     spacing within the fixed file output.    
 """
-__version__ = "$Revision: 0.06 $"
+__version__ = "$Revision: 0.07 $"
 __source__ = "$Header: \python27\DelimToFlat.py, v0.06 10/15/2014 $"
 
 import sys, unicodecsv, csv, time, codecs, unicodedata
@@ -156,7 +156,6 @@ class DelimToFlat():
                 if self.strTXTQUALIFIERchar == "":
                     reader = unicodecsv.reader(fDelim, delimiter=self.strDELIMchar, quoting=csv.QUOTE_NONE, encoding='UTF-8', errors='ignore')   
                 else:
-                    print "text qualifier:", self.strTXTQUALIFIERchar
                     reader = unicodecsv.reader(fDelim, delimiter=self.strDELIMchar, quotechar=self.strTXTQUALIFIERchar, encoding='UTF-8', errors='ignore')   
                 
                 lstHeaderRecord = reader.next()
@@ -244,7 +243,7 @@ class DelimToFlat():
         d = {}
         for l in lstHeader:
             if d.has_key(l):
-                print "Fatal error - file contains replicated field name:%s.  Fatal, aborting."
+                print "Fatal error - file: %s contains replicated field name:%s.  Fatal, aborting." % (self.strDELIMpathfn, l)
                 sys.exit(-1)
             else:
                 d[l] = 0

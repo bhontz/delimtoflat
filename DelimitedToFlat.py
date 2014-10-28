@@ -28,7 +28,7 @@
    The VERBATIM file is written out as UTF-8 whereas the CEND file is written as a cp-1252 (ascii) code page file
         
 """
-__version__ = "$Revision: 0.06 $"
+__version__ = "$Revision: 0.07 $"
 __source__ = "$Header: \python27\DelimToFlat.py, v0.06 10/15/2014 $"
 
 import os, sys, time, argparse
