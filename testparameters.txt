@@ -1,0 +1,7 @@
+DELIMpathfn = /users/brad/my projects/raw/pai_nissan_defector_20140915.txt
+LAYOUTpathfn = /users/brad/my projects/raw/pai_nissan_defector_20140701_Layout.csv
+CENDpathfn = /users/brad/my projects/raw/pai_nissan_defector_CENDflatfile.dat
+VERBpathfn = /users/brad/my projects/raw/pai_nissan_defector_VERBflatfile.dat
+DELIMchar = [|]
+TEXTqualifier = ["]
+UIDfldname = TMID
