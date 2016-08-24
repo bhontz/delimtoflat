@@ -42,5 +42,5 @@ v.04 - updated 7/8/2014 - corrected record counter (was showing # fields * # rec
 
 v.05 - updated 7/11/2014 - added "errors='ignore' parameter to the unicodereader() method as noted that non-UTF-8 characters provided in the feed.
 
-v.06 - updated 8/26/2014 - added the TEXTqualifier parameter to support Maritz Nationwide project - the verbatim fields contain double quotes that aren't meant to 
-be used as a text qualifier.
+v.06 - updated 8/26/2014 - added the TEXTqualifier parameter to support a problematic project file within which the verbatim fields contain double quotes that weren't meant to be used as a text qualifier.
+
