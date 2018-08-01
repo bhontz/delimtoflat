@@ -1,6 +1,6 @@
 !README - DelimitedToFlat.py - see version history at bottom of this document
 
-DelimitedToFlat.py - Command line procedure for converting delimited files to flat files.
+DelimitedToFlat.py - Command line procedure for converting delimited files to fixed field flat files.
 
 Requires a Parameters.txt file to be passed as an argument.  This file can utilize any filename, but the structure specified below is required.
 
